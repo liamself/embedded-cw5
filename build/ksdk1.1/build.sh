@@ -42,3 +42,6 @@
 	cd ../../../../demos/Warp/armgcc/Warp && ./clean.sh; ./build_release.sh
 	echo "\n\nNow, run\n\n\t/Applications/SEGGER/JLink/JLinkExe -device MKL03Z32XXX4 -if SWD -speed 100000 -CommanderScript ../../tools/scripts/jlink.commands\n\n"
 
+
+
+
