@@ -165,7 +165,7 @@ typedef enum
 
 typedef enum
 {
-	kWarpSizesI2cBufferBytes		= 4,
+	kWarpSizesI2cBufferBytes		= 7,
 	kWarpSizesSpiBufferBytes		= 4, /* Was 3 bytes */
 	kWarpSizesBME680CalibrationValuesCount	= 41,
 } WarpSizes;

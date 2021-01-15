@@ -4,5 +4,28 @@
 			"path": "."
 		}
 	],
-	"settings": {}
+	"settings": {
+		"files.associations": {
+			"memory": "c",
+			"__bit_reference": "c",
+			"__functional_base": "c",
+			"__node_handle": "c",
+			"algorithm": "c",
+			"atomic": "c",
+			"bitset": "c",
+			"chrono": "c",
+			"__memory": "c",
+			"functional": "c",
+			"iterator": "c",
+			"limits": "c",
+			"locale": "c",
+			"optional": "c",
+			"ratio": "c",
+			"system_error": "c",
+			"tuple": "c",
+			"type_traits": "c",
+			"vector": "c",
+			"ios": "c"
+		}
+	}
 }
