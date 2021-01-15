@@ -25,7 +25,7 @@ enum
 	kSSD1331PinRST		= GPIO_MAKE_PIN(HW_GPIOB, 3),
 };
 
-
+//Write display data to the device
 static int writeData(uint8_t *bytes, uint8_t numberOfBytes)
 {
 	spi_status_t status;
@@ -40,7 +40,7 @@ static int writeData(uint8_t *bytes, uint8_t numberOfBytes)
 	GPIO_DRV_ClearPinOutput(kSSD1331PinCSn);
 
 	/*
-	 *	Drive DC low (command).
+	 *	Drive DC high (data).
 	 */
 	GPIO_DRV_SetPinOutput(kSSD1331PinDC);
 
@@ -64,6 +64,7 @@ static int writeData(uint8_t *bytes, uint8_t numberOfBytes)
 
 }
 
+//Writes a series of commands to the device as a single transaction
 int
 writeCommands(uint8_t* commands, uint8_t numberOfCommands)
 {
@@ -98,6 +99,7 @@ writeCommands(uint8_t* commands, uint8_t numberOfCommands)
 	return status;
 }
 
+//Writes a single command byte to the device.
 static int
 writeCommand(uint8_t commandByte)
 {
@@ -134,6 +136,7 @@ writeCommand(uint8_t commandByte)
 	return status;
 }
 
+//Clears the OLED screen
 void ssd1331ClearScreen()
 {
 	
@@ -147,6 +150,7 @@ void ssd1331ClearScreen()
 
 }
 
+//Draws a single coloured pixel to the display at the given location.
 void
 ssd1331DrawPixel(uint8_t x, uint8_t y, uint16_t colour)
 {
@@ -173,6 +177,7 @@ ssd1331DrawPixel(uint8_t x, uint8_t y, uint16_t colour)
 	writeData(colourBytes, 2);	
 }
 
+//Draws a line of width 1 pixel to the display between the given bounds
 void ssd1331DrawLine(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint16_t colour)
 {
 	//Cap bounds
@@ -199,7 +204,7 @@ void ssd1331DrawLine(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint16_t co
 	writeCommands(commands, 8);
 }
 
-
+//Draws a rectangle to the display
 void ssd1331DrawRectangle(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint16_t lineColour, uint16_t fillColour)
 {
 	//Cap bounds
@@ -225,7 +230,7 @@ void ssd1331DrawRectangle(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, uint16
 	writeCommand(B(fillColour));
 }
 
-
+//Draws a single 6x8 character to the display at the given location and colour
 void 
 ssd1331DrawChar(uint8_t x, uint8_t y, char character, uint16_t colour)
 {
@@ -276,6 +281,7 @@ ssd1331DrawChar(uint8_t x, uint8_t y, char character, uint16_t colour)
 
 }
 
+// Writes a string of characters to the display at the given location, wrapping to subsequent lines if necessary
 void
 ssd1331WriteLine(uint8_t x, uint8_t y, char* str, uint16_t colour)
 {
@@ -316,7 +322,7 @@ ssd1331WriteLine(uint8_t x, uint8_t y, char* str, uint16_t colour)
 
 
 
-
+//Initialises OLED and prints test pattern to screen
 int
 devSSD1331init(void)
 {
@@ -424,11 +430,6 @@ devSSD1331init(void)
 	//Draw Line
 	ssd1331DrawLine(0,0,95, 63, RGB(0,0,255));
 	ssd1331DrawPixel(30,30, RGB(255,0,0));
-	
-	ssd1331DrawPixel(30,37, RGB(255,0,0));
-	ssd1331DrawPixel(32,30, RGB(255,255,0));
-	ssd1331DrawPixel(12,30, RGB(255,32,76));
-	ssd1331WriteLine(0, 0, "d!", RGB(255,255,255));
 	writeCommand(0x2E);
 
 	/*

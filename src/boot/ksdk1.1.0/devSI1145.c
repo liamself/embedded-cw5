@@ -23,6 +23,7 @@ extern volatile uint8_t             gWarpSupplySettlingDelayMilliseconds;
 
 uint16_t pullup = 32768;
 
+//Writes a byte to a parameter register
 WarpStatus
 writeSI1145Param(uint8_t paramAddr, uint8_t payload)
 {
@@ -41,6 +42,7 @@ writeSI1145Param(uint8_t paramAddr, uint8_t payload)
     return readSensorRegisterSI1145(SI1145_REG_PARAM_RD, 1);;
 }
 
+//Reads a parameter and stores result in I2C buffer
 WarpStatus
 readSI1145Param(uint8_t paramAddr)
 {
@@ -54,6 +56,7 @@ readSI1145Param(uint8_t paramAddr)
     return readSensorRegisterSI1145(SI1145_REG_PARAM_RD, 1);
 }
 
+//Resets sensor, enables UV, IR and Visible light sensors, and switches to automatic measurement
 void
 initSI1145(const uint8_t i2cAddress, WarpI2CDeviceState volatile * deviceStatePointer)
 {
@@ -90,6 +93,7 @@ initSI1145(const uint8_t i2cAddress, WarpI2CDeviceState volatile * deviceStatePo
 
 }
 
+//Resets sensor registers. Required when sensor is started up
 void
 resetSI1145()
 {
@@ -107,6 +111,7 @@ resetSI1145()
 }
 
 
+//Writes a byte to a given register
 WarpStatus 
 writeSensorRegisterSI1145(uint8_t deviceRegister, uint8_t payload, uint16_t pullupValue)
 {
@@ -160,6 +165,7 @@ writeSensorRegisterSI1145(uint8_t deviceRegister, uint8_t payload, uint16_t pull
 }
 
 
+//Reads a given register
 WarpStatus 
 readSensorRegisterSI1145(uint8_t deviceRegister, uint8_t numberOfBytes)
 {
@@ -217,15 +223,8 @@ readSensorRegisterSI1145(uint8_t deviceRegister, uint8_t numberOfBytes)
     return kWarpStatusOK;
 }
 
-uint8_t 
-si1145ReadTest()
-{
-    readSensorRegisterSI1145(SI1145_REG_HW_KEY, 1);
-    
-    SEGGER_RTT_printf(0, "0x%02x \n", deviceSI1145State.i2cBuffer[0]);
-    return deviceSI1145State.i2cBuffer[0];
-}
 
+//Returns the current UV light level
 uint16_t 
 si1145ReadUV()
 {
@@ -237,6 +236,8 @@ si1145ReadUV()
     return bit0 | (bit1<< 8);
 }
 
+
+//Returns the current Visible light level
 uint16_t 
 si1145ReadVisibleLight()
 {
@@ -248,6 +249,7 @@ si1145ReadVisibleLight()
     return bit0 | (bit1<< 8);
 }
 
+//Returns the current IR light level
 uint16_t 
 si1145ReadIR()
 {

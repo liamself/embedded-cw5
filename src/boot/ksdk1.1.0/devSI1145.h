@@ -62,6 +62,7 @@
 
 #define SI1145_PARAM_ALS_ENCODING 0x06
 
+//Parameters
 #define SI1145_PARAM_PS1_ADCMUX 0x07
 #define SI1145_PARAM_PS2_ADCMUX 0x08
 #define SI1145_PARAM_PS3_ADCMUX 0x09
@@ -101,4 +102,3 @@ WarpStatus readSensorRegisterSI1145(uint8_t deviceRegister, uint8_t numberOfByte
 uint16_t si1145ReadUV();
 uint16_t si1145ReadVisibleLight();
 uint16_t si1145ReadIR();
-uint8_t si1145ReadTest();

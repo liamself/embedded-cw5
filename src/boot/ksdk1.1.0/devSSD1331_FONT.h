@@ -3,6 +3,7 @@
 
 //Font characters in ASCII order
 //Offset by 32
+//Font by Neven Boyanov and is adapted from https://github.com/lexus2k/ssd1306/blob/master/src/ssd1306_fonts.c
 const uint8_t ssd1331font[] =
 {
   0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // space

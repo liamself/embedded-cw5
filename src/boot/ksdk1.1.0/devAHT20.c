@@ -26,6 +26,7 @@ uint16_t pullup = 32768;
 uint32_t humidityData;
 uint32_t tempData;
 
+//Initialise sensor, send calibration commands
 void
 initAHT20(const uint8_t i2cAddress, WarpI2CDeviceState volatile * deviceStatePointer)
 {
@@ -61,6 +62,7 @@ initAHT20(const uint8_t i2cAddress, WarpI2CDeviceState volatile * deviceStatePoi
 
 }
 
+//Prompts the sensor to take and store new measurements. The measurements are not returned here, but can be retrieved using the appropriate function.
 void getMeasurementAHT20()
 {
     //Send measurement trigger
@@ -81,15 +83,7 @@ void getMeasurementAHT20()
 
 
     //read measurement values
-    readFromAHT20(7); //Warp max is 4, todo change this
-    // SEGGER_RTT_printf(0, "AHT20BUFFER \n");
-    // SEGGER_RTT_printf(0, "0x%02x \n", deviceAHT20State.i2cBuffer[0]);
-    // SEGGER_RTT_printf(0, "0x%02x \n", deviceAHT20State.i2cBuffer[1]);
-    // SEGGER_RTT_printf(0, "0x%02x \n", deviceAHT20State.i2cBuffer[2]);
-    // SEGGER_RTT_printf(0, "0x%02x \n", deviceAHT20State.i2cBuffer[3]);
-    // SEGGER_RTT_printf(0, "0x%02x \n", deviceAHT20State.i2cBuffer[4]);
-    // SEGGER_RTT_printf(0, "0x%02x \n", deviceAHT20State.i2cBuffer[5]);
-    // SEGGER_RTT_printf(0, "0x%02x \n", deviceAHT20State.i2cBuffer[6]);
+    readFromAHT20(7); 
     humidityData = ((uint32_t)(deviceAHT20State.i2cBuffer[1])<<12) | ((uint32_t)(deviceAHT20State.i2cBuffer[2]) << 4) | ((uint32_t)(deviceAHT20State.i2cBuffer[3]) >> 4);
     tempData = (((uint32_t)((deviceAHT20State.i2cBuffer[3]) & 0x0f) << 16) | ((uint32_t)(deviceAHT20State.i2cBuffer[4]) << 8) | ((uint32_t)(deviceAHT20State.i2cBuffer[5])));
 
@@ -99,18 +93,22 @@ void getMeasurementAHT20()
     
 }
 
+//Return the temperature in degrees C. Must have called getMeasurementAHT20 prior to take a measurement
 float getTempAHT20()
 {
     float temp = (float)tempData;
     return (temp * 200 / 0x100000) - 50;
 }
 
+
+//Return the humidity as a percentage. Must have called getMeasurementAHT20 prior to take a measurement
 float getHumidityAHT20()
 {
     float humid = (float)humidityData;
     return (humid * 100 / 0x100000);
 }
 
+//Retrieves a status code from the sensor (for example to tell if the sensor is busy)
 uint8_t getAHT20StatusByte()
 {
 
@@ -132,6 +130,7 @@ uint8_t getAHT20StatusByte()
     return 0xFF; //Ensures busy bit is set in event of error
 }
 
+//Reads the requested number of bytes from the sensor and stores them in the I2C buffer
 WarpStatus readFromAHT20(uint8_t numberOfBytes)
 {
     i2c_status_t status;
@@ -162,6 +161,7 @@ WarpStatus readFromAHT20(uint8_t numberOfBytes)
     return kWarpStatusOK;
 }
 
+//Writes one or more bytes to the AHT20
 WarpStatus
 writeToAHT20(uint8_t *payloadBytes, uint8_t numberOfBytes, uint16_t pullupValue)
 {

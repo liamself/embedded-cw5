@@ -852,8 +852,9 @@ warpLowPowerSecondsSleep(uint32_t sleepSeconds, bool forceAllPinsIntoLowPowerSta
 
 
 
-
-void testSensors()
+//Main function for houseplant monitor.
+//Collects and processes measurements, and outputs to OLED display
+void houseplantMonitor()
 {
 	char tempStr[25];
 	char humidStr[25];
@@ -1148,7 +1149,7 @@ main(void)
 	
 	devSSD1331init();
 	SEGGER_RTT_WriteString(0, "sensor test\n");
-	testSensors();
+	houseplantMonitor();
 
 
 	return 0;

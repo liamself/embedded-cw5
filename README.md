@@ -12,7 +12,7 @@ The purpose of this project was to create an embedded system based upon the KL03
 ## Building and running the device
 The same process is used to build and upload the software as is used by the underlying WARP firmware. Refer to Section 1 of https://github.com/physical-computation/Warp-firmware/blob/master/README.md for build instructions.
 
-A wiring summary is submitted as a supplementary file, to allow for the device to be replicated.
+A wiring summary is submitted as a supplementary Excel file, which summizes the pins used on the KL03 to allow for reproduction.
 
 ## Summary of additions/changes
 
