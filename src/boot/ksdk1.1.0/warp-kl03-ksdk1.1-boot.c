@@ -892,6 +892,7 @@ void houseplantMonitor()
 		for (int j = 0; j < 25; j++)
 		{
 			light += si1145ReadIR();
+			//SEGGER_RTT_printf(0,"%d\n", si1145ReadIR());
 		}
 		light /= 25;
 
